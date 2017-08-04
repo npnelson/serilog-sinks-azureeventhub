@@ -15,10 +15,10 @@
 using System;
 using System.IO;
 using System.Text;
-using Microsoft.ServiceBus.Messaging;
 using Serilog.Core;
 using Serilog.Events;
 using Serilog.Formatting;
+using Microsoft.Azure.EventHubs;
 
 namespace Serilog.Sinks.AzureEventHub
 {
@@ -55,13 +55,10 @@ namespace Serilog.Sinks.AzureEventHub
                 _formatter.Format(logEvent, render);
                 body = Encoding.UTF8.GetBytes(render.ToString());
             }
-            var eventHubData = new EventData(body)
-            {
-                PartitionKey = Guid.NewGuid().ToString()
-            };
+            var eventHubData = new EventData(body);            
             eventHubData.Properties.Add("Type", "SerilogEvent");
 
-            _eventHubClient.Send(eventHubData);
+            _eventHubClient.SendAsync(eventHubData).GetAwaiter().GetResult();
         }
     }
 }

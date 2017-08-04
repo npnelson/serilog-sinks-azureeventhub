@@ -1,9 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 
-[assembly: AssemblyTitle("Serilog.Sinks.AzureEventHub")]
-[assembly: AssemblyDescription("Serilog sink for Azure Event Hub")]
-[assembly: AssemblyCopyright("Copyright © Serilog Contributors 2015")]
+[assembly: AssemblyCopyright("Copyright © Serilog Contributors 2017")]
 
 [assembly: InternalsVisibleTo("Serilog.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100fb8d13fd344a1c" +
                                                        "6fe0fe83ef33c1080bf30690765bc6eb0df26ebfdf8f21670c64265b30db09f73a0dea5b3db4c9" +

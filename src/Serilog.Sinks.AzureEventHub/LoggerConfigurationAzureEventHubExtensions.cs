@@ -14,13 +14,13 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.ServiceBus.Messaging;
 using Serilog.Configuration;
 using Serilog.Core;
 using Serilog.Events;
 using Serilog.Formatting;
 using Serilog.Formatting.Display;
 using Serilog.Sinks.AzureEventHub;
+using Microsoft.Azure.EventHubs;
 
 namespace Serilog
 {
@@ -153,7 +153,7 @@ namespace Serilog
             if (string.IsNullOrWhiteSpace(eventHubName))
                 throw new ArgumentNullException("eventHubName");
 
-            var client = EventHubClient.CreateFromConnectionString(connectionString, eventHubName);
+            var client = EventHubClient.CreateFromConnectionString(connectionString);
 
             return AzureEventHub(loggerConfiguration, client, outputTemplate, formatProvider, restrictedToMinimumLevel, writeInBatches, period, batchPostingLimit);
         }
@@ -190,7 +190,7 @@ namespace Serilog
             if (string.IsNullOrWhiteSpace(eventHubName))
                 throw new ArgumentNullException("eventHubName");
 
-            var client = EventHubClient.CreateFromConnectionString(connectionString, eventHubName);
+            var client = EventHubClient.CreateFromConnectionString(connectionString);
 
             return AzureEventHub(loggerConfiguration, formatter, client, restrictedToMinimumLevel, writeInBatches, period, batchPostingLimit);
         }

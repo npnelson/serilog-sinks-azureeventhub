@@ -17,10 +17,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.ServiceBus.Messaging;
 using Serilog.Events;
 using Serilog.Formatting;
 using Serilog.Sinks.PeriodicBatching;
+using Microsoft.Azure.EventHubs;
 
 namespace Serilog.Sinks.AzureEventHub
 {
@@ -76,16 +76,11 @@ namespace Serilog.Sinks.AzureEventHub
                     _formatter.Format(logEvent, render);
                     body = Encoding.UTF8.GetBytes(render.ToString());
                 }
-                var eventHubData = new EventData(body)
-                {
-                    PartitionKey = batchPartitionKey
-                };
+                var eventHubData = new EventData(body);                                
                 eventHubData.Properties.Add("Type", "SerilogEvent");
-
                 batchedEvents.Add(eventHubData);
-            }
-
-            return _eventHubClient.SendBatchAsync(batchedEvents);
+            }               
+            return _eventHubClient.SendAsync(batchedEvents);
         }
     }
 }
